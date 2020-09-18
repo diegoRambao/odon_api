@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Specialty;
 use App\Http\Controllers\ParentController;
 
-class SpecialtyController extends ParentController
+class UserController extends ParentController
 {
     function __construct() {
-        parent::__construct(config('procedure.specialty'), 'specialties');
+        parent::__construct(config('procedure.user'), 'users');
     }
 }
