@@ -8,11 +8,13 @@ use App\Http\Controllers\GenderController;
 use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\TypeDocumentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\ApiAuthController;
 
 Route::get('appointment', [AppointmentController::class, 'getAll']);
 Route::get('appointment/{id}',[AppointmentController::class, 'get']);
 Route::post('appointment', [AppointmentController::class, 'create']);
 Route::put('appointment/{id}', [AppointmentController::class, 'update']);
+Route::get('appointment_user/{id}/{state?}', [AppointmentController::class, 'getAppointmentsByUser']);
 Route::delete('appointment/{id}', [AppointmentController::class, 'delete']);
 
 Route::get('dentist', [DentistController::class, 'getAll']);
@@ -42,5 +44,9 @@ Route::delete('type_document/{id}', [TypeDocumentController::class, 'delete']);
 Route::get('user', [UserController::class, 'getAll']);
 Route::get('user/{id}',[UserController::class, 'get']);
 Route::post('user', [UserController::class, 'create']);
-Route::put('user/{id}', [UserController::class, 'update']);
+Route::post('user_update/{id}', [UserController::class, 'update']);
 Route::delete('user/{id}', [UserController::class, 'delete']);
+Route::post('file', [UserController::class, 'insertFile']);
+
+Route::post('/login', [ApiAuthController::class, 'login']);
+Route::post('/register',[ApiAuthController::class, 'register']);
