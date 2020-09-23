@@ -15,19 +15,21 @@ class UserController extends ParentController
     }
 
     public function update(Request $request) {
-        $cover = $request->file('imgUrl');
-        $extension = $cover->getClientOriginalExtension();
-        Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
-
         $user = json_decode($request->user, true);
-        // $arrayData = json_decode($user, true);
         $person = $user['person'];
-        $person['imgUrl'] = $cover->getFilename().'.'.$extension;
-        $user['person'] = $person;
+        if($request->file('imgUrl')){
+            if(File::exists(public_path('img/'. $person['imgUrl']))){
+                File::delete(public_path('img/'. $person['imgUrl']));
+            }
+            $cover = $request->file('imgUrl');
+            $extension = $cover->getClientOriginalExtension();
+            Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
 
+            $person['imgUrl'] = $cover->getFilename().'.'.$extension;
+            $user['person'] = $person;
+        }
         $arrayData = json_encode($user);
         $resBd = DB::select("call update_user('$arrayData')");
-        $res = $resBd[0]->success == 1 ? true: false;
-        return $res;
+        return $user;
     }
 }

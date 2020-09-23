@@ -39,6 +39,5 @@ class ApiAuthController extends Controller
             $response = ["message" =>'User does not exist'];
             return response($response, 422);
         }
-        return $user;
     }
 }
